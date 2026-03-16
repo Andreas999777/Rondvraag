@@ -1,337 +1,151 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>5 Vragen over Stress & Welzijn</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
-    body { font-family: 'Inter', system-ui, sans-serif; }
-    .title-font { font-family: 'Playfair Display', serif; }
-    .option-btn {
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .option-btn.active {
-      background-color: #166534;
-      color: white;
-      transform: scale(1.04);
-    }
-    .checkbox-custom {
-      accent-color: #166534;
-    }
-    label {
-      word-break: break-word;
-      hyphens: auto;
-    }
-  </style>
-</head>
-<body class="bg-emerald-50 min-h-screen pb-12">
-
-  <div class="max-w-md mx-auto bg-white shadow-xl min-h-screen overflow-hidden">
-
-    <!-- Header -->
-    <div class="bg-emerald-800 text-white py-8 px-6 text-center">
-      <h1 class="title-font text-3xl font-bold tracking-tight">5 VRAGEN OVER</h1>
-      <h2 class="title-font text-4xl font-bold tracking-tighter mt-1">STRESS & WELZIJN</h2>
-      <p class="mt-3 text-emerald-100 text-sm">Invullen aan de deur – antwoorden gaan naar de coach</p>
-    </div>
-
-    <form id="quizForm" class="px-6 pt-8 pb-12 space-y-10">
-
-      <!-- Coach keuze -->
-      <div>
-        <h3 class="font-semibold text-emerald-800 text-lg mb-3">Welke welzijnscoach ben jij?</h3>
-        <select id="coach" name="coach" required class="w-full border border-emerald-300 rounded-2xl px-5 py-4 text-base focus:border-emerald-600 outline-none bg-white">
-          <option value="" disabled selected>Kies...</option>
-          <option value="Andreas">Andreas</option>
-          <option value="Thalyssa">Thalyssa</option>
-        </select>
-      </div>
-
-      <!-- Vraag 1 -->
-      <div>
-        <h3 class="font-semibold text-emerald-800 text-lg mb-4 flex items-center gap-2">
-          <span class="bg-emerald-100 text-emerald-800 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold">1</span>
-          Hoe voel jij je meestal?
-        </h3>
-        <div class="grid grid-cols-3 gap-3">
-          <label class="flex flex-col items-center justify-center bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600 text-center min-h-[96px]">
-            <input type="checkbox" name="gevoel[]" value="Kalm" class="checkbox-custom w-5 h-5 mb-2">
-            <span class="font-medium text-emerald-700">Kalm</span>
-          </label>
-          <label class="flex flex-col items-center justify-center bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600 text-center min-h-[96px]">
-            <input type="checkbox" name="gevoel[]" value="Actief" class="checkbox-custom w-5 h-5 mb-2">
-            <span class="font-medium text-emerald-700">Actief</span>
-          </label>
-          <label class="flex flex-col items-center justify-center bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600 text-center min-h-[96px]">
-            <input type="checkbox" name="gevoel[]" value="Gestrest" class="checkbox-custom w-5 h-5 mb-2">
-            <span class="font-medium text-emerald-700">Gestrest</span>
-          </label>
-        </div>
-      </div>
-
-      <!-- Vraag 2 -->
-      <div>
-        <h3 class="font-semibold text-emerald-800 text-lg mb-4 flex items-center gap-2">
-          <span class="bg-emerald-100 text-emerald-800 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold">2</span>
-          Hoe gaat het met je gezondheid & energie? (1-10)
-        </h3>
-        <div class="bg-white border border-emerald-200 rounded-3xl p-6">
-          <div class="flex justify-between text-xs text-emerald-500 mb-3 px-1">
-            <span>Helemaal niet ok</span>
-            <span>supergoed</span>
-          </div>
-          <div id="energyScale" class="flex flex-wrap gap-1.5"></div>
-          <input type="hidden" id="energieScore" name="energie" value="">
-        </div>
-      </div>
-
-      <!-- Vraag 3 -->
-      <div>
-        <h3 class="font-semibold text-emerald-800 text-lg mb-4 flex items-center gap-2">
-          <span class="bg-emerald-100 text-emerald-800 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold">3</span>
-          Hoe zou je jouw eetgewoontes omschrijven?
-        </h3>
-        <div class="space-y-3">
-          <label class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600">
-            <input type="checkbox" name="eten[]" value="Ik eet meestal gezond" class="checkbox-custom w-5 h-5">
-            <span class="font-medium">Ik eet meestal gezond</span>
-          </label>
-          <label class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600">
-            <input type="checkbox" name="eten[]" value="Ik sla vaak maaltijden over" class="checkbox-custom w-5 h-5">
-            <span class="font-medium">Ik sla vaak maaltijden over</span>
-          </label>
-          <div class="pl-8 text-sm text-emerald-600 mt-1 mb-1 font-medium">
-            Ontbijt je iedere dag?
-          </div>
-          <div class="flex gap-10 pl-8">
-            <label class="flex items-center gap-2">
-              <input type="radio" name="ontbijt" value="Ja" class="checkbox-custom w-5 h-5">
-              <span>Ja</span>
-            </label>
-            <label class="flex items-center gap-2">
-              <input type="radio" name="ontbijt" value="Nee" class="checkbox-custom w-5 h-5">
-              <span>Nee</span>
-            </label>
-          </div>
-          <label class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600">
-            <input type="checkbox" name="eten[]" value="Ik eet onregelmatig" class="checkbox-custom w-5 h-5">
-            <span class="font-medium">Ik eet onregelmatig</span>
-          </label>
-          <label class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600">
-            <input type="checkbox" name="eten[]" value="Ik ben fan van snoep/energydrinks" class="checkbox-custom w-5 h-5">
-            <span class="font-medium">Ik ben fan van snoep/energydrinks</span>
-          </label>
-          <label class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600">
-            <input type="checkbox" name="eten[]" value="Ik eet meestal ongezond" class="checkbox-custom w-5 h-5">
-            <span class="font-medium">Ik eet meestal ongezond</span>
-          </label>
-        </div>
-      </div>
-
-      <!-- Vraag 4 -->
-      <div>
-        <h3 class="font-semibold text-emerald-800 text-lg mb-4 flex items-center gap-2">
-          <span class="bg-emerald-100 text-emerald-800 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold">4</span>
-          Hoeveel beweeg je per dag?
-        </h3>
-        <div class="grid grid-cols-3 gap-3">
-          <label class="flex flex-col items-center justify-center bg-white border border-emerald-200 rounded-2xl p-5 cursor-pointer hover:border-emerald-600 text-center min-h-[96px]">
-            <input type="checkbox" name="bewegen" value="Minder dan 30 min" class="checkbox-custom w-5 h-5 mb-2">
-            <span class="font-medium text-sm">Minder dan<br>30 min</span>
-          </label>
-          <label class="flex flex-col items-center justify-center bg-white border border-emerald-200 rounded-2xl p-5 cursor-pointer hover:border-emerald-600 text-center min-h-[96px]">
-            <input type="checkbox" name="bewegen" value="Meer dan 30 min" class="checkbox-custom w-5 h-5 mb-2">
-            <span class="font-medium text-sm">Meer dan<br>30 min</span>
-          </label>
-          <label class="flex flex-col items-center justify-center bg-white border border-emerald-200 rounded-2xl p-5 cursor-pointer hover:border-emerald-600 text-center min-h-[96px]">
-            <input type="checkbox" name="bewegen" value="Sportief" class="checkbox-custom w-5 h-5 mb-2">
-            <span class="font-medium text-sm">Sportief</span>
-          </label>
-        </div>
-      </div>
-
-      <!-- Vraag 5 -->
-      <div>
-        <h3 class="font-semibold text-emerald-800 text-lg mb-4 flex items-center gap-2">
-          <span class="bg-emerald-100 text-emerald-800 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold">5</span>
-          Wat is voor jou het belangrijkste?
-        </h3>
-        <div class="space-y-3">
-          <label class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600">
-            <input type="checkbox" name="belangrijk[]" value="Meer energie & focus (of spiermassa opbouwen)" class="checkbox-custom w-5 h-5">
-            <span class="font-medium">Meer energie & focus (of spiermassa opbouwen)</span>
-          </label>
-          <label class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600">
-            <input type="checkbox" name="belangrijk[]" value="Afslanken zonder honger (of spiermassa opbouwen)" class="checkbox-custom w-5 h-5">
-            <span class="font-medium">Afslanken zonder honger (of spiermassa opbouwen)</span>
-          </label>
-          <label class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600">
-            <input type="checkbox" name="belangrijk[]" value="Betere conditie & sportprestaties" class="checkbox-custom w-5 h-5">
-            <span class="font-medium">Betere conditie & sportprestaties</span>
-          </label>
-          <label class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600">
-            <input type="checkbox" name="belangrijk[]" value="Mooie huid/haar & soepele gewrichten" class="checkbox-custom w-5 h-5">
-            <span class="font-medium">Mooie huid/haar & soepele gewrichten</span>
-          </label>
-          <label class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-4 cursor-pointer hover:border-emerald-600">
-            <input type="checkbox" name="belangrijk[]" value="Sterke weerstand, goede spijsvertering & slaap" class="checkbox-custom w-5 h-5">
-            <span class="font-medium">Sterke weerstand, goede spijsvertering & slaap</span>
-          </label>
-          <div class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-4">
-            <input type="checkbox" id="andersCheck" class="checkbox-custom w-5 h-5">
-            <input type="text" id="andersText" name="anders" placeholder="Anders: ..." class="flex-1 bg-transparent outline-none text-sm placeholder:text-emerald-400">
-          </div>
-        </div>
-      </div>
-
-      <!-- Wil je graag -->
-      <div class="pt-6 border-t border-emerald-200">
-        <h3 class="font-semibold text-emerald-800 text-lg mb-4">Wil je graag</h3>
-        <div class="space-y-4">
-          <label class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-5 cursor-pointer hover:border-emerald-600">
-            <input type="checkbox" name="fitcheck" value="ja" class="checkbox-custom w-5 h-5">
-            <span class="font-medium">Een gratis fitcheck (welzijnsevaluatie)?</span>
-          </label>
-          <label class="flex items-center gap-3 bg-white border border-emerald-200 rounded-2xl p-5 cursor-pointer hover:border-emerald-600">
-            <input type="checkbox" name="infosessie" value="ja" class="checkbox-custom w-5 h-5">
-            <span class="font-medium">Een uitnodiging voor infosessie voeding & levensstijl?</span>
-          </label>
-        </div>
-      </div>
-
-      <!-- Contact -->
-      <div class="space-y-6">
-        <div>
-          <label class="block text-emerald-700 text-sm mb-1 font-medium">Voornaam en naam van de bewoner</label>
-          <input type="text" name="naam" required class="w-full border border-emerald-200 rounded-2xl px-5 py-4 focus:border-emerald-600 outline-none text-base">
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-emerald-700 text-sm mb-1 font-medium">Tel</label>
-            <input type="tel" name="tel" required class="w-full border border-emerald-200 rounded-2xl px-5 py-4 focus:border-emerald-600 outline-none text-base">
-          </div>
-          <div>
-            <label class="block text-emerald-700 text-sm mb-1 font-medium">Mail</label>
-            <input type="email" name="mail" required class="w-full border border-emerald-200 rounded-2xl px-5 py-4 focus:border-emerald-600 outline-none text-base">
-          </div>
-        </div>
-      </div>
-
-      <!-- Verstuur knop -->
-      <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-lg py-6 rounded-3xl transition-all active:scale-95 shadow-lg mt-8">
-        Verstuur mijn antwoorden →
-      </button>
-    </form>
-
-    <!-- Succes scherm -->
-    <div id="successScreen" class="hidden px-6 py-12 text-center">
-      <div class="mx-auto w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mb-6">
-        <span class="text-5xl">🎉</span>
-      </div>
-      <h2 class="text-3xl font-bold text-emerald-800 mb-2">Bedankt!</h2>
-      <p class="text-emerald-700 mb-6">De antwoorden zijn verstuurd.<br>Je kunt nu verder met de volgende deur.</p>
-      <button onclick="window.location.reload()" class="text-emerald-700 font-medium underline">
-        Volgende formulier starten
-      </button>
-    </div>
-
-  </div>
-
-  <script>
-    // Energie schaal aanmaken
-    function createEnergyScale() {
-      const container = document.getElementById('energyScale');
-      for (let i = 1; i <= 10; i++) {
-        const btn = document.createElement('div');
-        btn.className = `option-btn flex-1 h-12 flex items-center justify-center text-lg font-semibold border border-emerald-200 rounded-2xl cursor-pointer min-w-[2.5rem]`;
-        btn.textContent = i;
-        btn.dataset.value = i;
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('#energyScale > div').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          document.getElementById('energieScore').value = i;
-        });
-        container.appendChild(btn);
-      }
-    }
-
-    // Anders checkbox + tekstveld koppelen
-    function initAnders() {
-      const check = document.getElementById('andersCheck');
-      const text = document.getElementById('andersText');
-      check.addEventListener('change', () => {
-        if (check.checked) text.focus();
-      });
-    }
-
-    // Formulier verzenden via Web3Forms
-    function handleSubmit(e) {
-      e.preventDefault();
-      const form = e.target;
-
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
-      }
-
-      // Tijdelijk vast op Andreas – test eerst dit
-      const accessKey = '7258c870-ed89-4906-ac87-c943fc14abaf';
-
-      // Hidden fields toevoegen
-      const hiddenAccess = document.createElement('input');
-      hiddenAccess.type = 'hidden';
-      hiddenAccess.name = 'access_key';
-      hiddenAccess.value = accessKey;
-      form.appendChild(hiddenAccess);
-
-      const hiddenSubject = document.createElement('input');
-      hiddenSubject.type = 'hidden';
-      hiddenSubject.name = 'subject';
-      hiddenSubject.value = 'Stress & Welzijn – deur aan deur';
-      form.appendChild(hiddenSubject);
-
-      const hiddenReplyTo = document.createElement('input');
-      hiddenReplyTo.type = 'hidden';
-      hiddenReplyTo.name = 'replyto';
-      hiddenReplyTo.value = form.querySelector('[name="mail"]').value || '';
-      form.appendChild(hiddenReplyTo);
-
-      fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: new FormData(form)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          console.log('Verzonden!', data);
-          form.classList.add('hidden');
-          document.getElementById('successScreen').classList.remove('hidden');
-        } else {
-          alert('Verzenden mislukt: ' + (data.message || 'onbekende fout'));
-          console.error('Web3Forms fout:', data);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Welzijnsevaluatie - Andreas & Thalyssa</title>
+    <style>
+        :root { --primary-color: #1e5a32; --bg-color: #f0f4f1; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); margin: 0; padding: 15px; color: #333; }
+        .container { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 500px; margin: 0 auto; }
+        h1 { color: var(--primary-color); font-size: 20px; text-align: center; margin-top: 0; border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; }
+        
+        .coach-box { background: #e8f5e9; padding: 15px; border-radius: 8px; border: 2px solid var(--primary-color); margin-bottom: 20px; }
+        label { font-weight: bold; display: block; margin-top: 15px; color: var(--primary-color); }
+        
+        select, input[type="text"], input[type="email"], input[type="tel"] { 
+            width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 16px; 
         }
-      })
-      .catch(err => {
-        alert('Verbindingsfout: ' + err.message);
-        console.error('Fetch error:', err);
-      })
-      .finally(() => {
-        // Opruimen
-        form.removeChild(hiddenAccess);
-        form.removeChild(hiddenSubject);
-        form.removeChild(hiddenReplyTo);
-      });
-    }
 
-    // Initialiseren
-    window.onload = () => {
-      createEnergyScale();
-      initAnders();
-      document.getElementById('quizForm').addEventListener('submit', handleSubmit);
-    };
-  </script>
+        .option-card { 
+            display: flex; align-items: center; background: #f9f9f9; padding: 12px; margin-top: 8px; border-radius: 8px; border: 1px solid #ddd; cursor: pointer;
+        }
+        .option-card input { margin-right: 12px; transform: scale(1.4); }
+
+        .slider-container { text-align: center; padding: 10px 0; }
+        .slider { width: 100%; height: 15px; border-radius: 5px; background: #d3d3d3; outline: none; transition: opacity .2s; }
+
+        .submit-btn { 
+            background: var(--primary-color); color: white; border: none; padding: 18px; width: 100%; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 25px; 
+        }
+        .submit-btn:disabled { background: #ccc; }
+
+        #status { margin-top: 15px; text-align: center; font-weight: bold; padding: 10px; border-radius: 5px; display: none; }
+        .success { background: #d4edda; color: #155724; display: block !important; }
+        .error { background: #f8d7da; color: #721c24; display: block !important; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="coach-box">
+        <label for="coach">Welzijnscoach:</label>
+        <select id="coach">
+            <option value="Andreas">Andreas</option>
+            <option value="Thalyssa">Thalyssa</option>
+        </select>
+    </div>
+
+    <h1>5 VRAGEN OVER STRESS EN WELZIJN</h1>
+
+    <form id="surveyForm">
+        <label>1. Hoe voel jij je meestal?</label>
+        <select id="q1" required>
+            <option value="" disabled selected>Maak een keuze...</option>
+            <option value="Kalm">Kalm</option>
+            <option value="Actief">Actief</option>
+            <option value="Gestresseerd">Gestresseerd</option>
+        </select>
+
+        <label>2. Hoe gaat het met je gezondheid & energie? (1-10)</label>
+        <div class="slider-container">
+            <input type="range" id="q2" min="1" max="10" value="5" class="slider" oninput="this.nextElementSibling.value = this.value">
+            <output style="font-size: 24px; font-weight: bold; color: var(--primary-color);">5</output>
+        </div>
+
+        <label>3. Hoe zou je jouw eetgewoontes omschrijven?</label>
+        <div id="q3_group">
+            <label class="option-card"><input type="checkbox" name="q3" value="Meestal gezond"> Meestal gezond</label>
+            <label class="option-card"><input type="checkbox" name="q3" value="Slaat maaltijden over"> Ik sla vaak maaltijden over</label>
+            <label class="option-card"><input type="checkbox" name="q3" value="Onregelmatig"> Ik eet onregelmatig</label>
+            <label class="option-card"><input type="checkbox" name="q3" value="Snoep/Energydrinks"> Ik ben fan van snoep/energydrinks</label>
+            <label class="option-card"><input type="checkbox" name="q3" value="Ongezond"> Ik eet meestal ongezond</label>
+        </div>
+
+        <label>4. Hoeveel beweeg je per dag?</label>
+        <div id="q4_group">
+            <label class="option-card"><input type="radio" name="q4" value="Minder dan 30 min" required> Minder dan 30 min</label>
+            <label class="option-card"><input type="radio" name="q4" value="Meer dan 30 min"> Meer dan 30 min</label>
+            <label class="option-card"><input type="radio" name="q4" value="Sportief"> Sportief</label>
+        </div>
+
+        <label>5. Wat is voor jou het belangrijkste?</label>
+        <div id="q5_group">
+            <label class="option-card"><input type="checkbox" name="q5" value="Energie & Focus"> Meer energie & focus</label>
+            <label class="option-card"><input type="checkbox" name="q5" value="Afslanken"> Afslanken zonder honger</label>
+            <label class="option-card"><input type="checkbox" name="q5" value="Conditie"> Betere conditie & sport</label>
+            <label class="option-card"><input type="checkbox" name="q5" value="Huid/Haar"> Mooie huid/haar & gewrichten</label>
+            <label class="option-card"><input type="checkbox" name="q5" value="Weerstand"> Sterke weerstand & slaap</label>
+        </div>
+
+        <label>Naam en Voornaam:</label>
+        <input type="text" id="naam" required placeholder="Typ hier de naam...">
+
+        <label>Telefoonnummer:</label>
+        <input type="tel" id="tel" placeholder="0470 00 00 00">
+
+        <label>E-mailadres:</label>
+        <input type="email" id="email" placeholder="naam@voorbeeld.be">
+
+        <div id="status"></div>
+        <button type="submit" class="submit-btn" id="submitBtn">Opslaan in Spreadsheet</button>
+    </form>
+</div>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzTvEBSWlUqnDXe8WU5j2-hQsnBUFns9zFEEkvSWlzS5bOOosT4wN3Vaot9fvMNtFziiA/exec';
+    const form = document.getElementById('surveyForm');
+    const btn = document.getElementById('submitBtn');
+    const status = document.getElementById('status');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btn.disabled = true;
+        status.innerText = "Bezig met verzenden...";
+        status.className = "";
+        status.style.display = "block";
+
+        const q3Values = Array.from(document.querySelectorAll('input[name="q3"]:checked')).map(cb => cb.value).join(', ');
+        const q4Value = document.querySelector('input[name="q4"]:checked').value;
+        const q5Values = Array.from(document.querySelectorAll('input[name="q5"]:checked')).map(cb => cb.value).join(', ');
+
+        const formData = new FormData();
+        formData.append('coach', document.getElementById('coach').value);
+        formData.append('q1', document.getElementById('q1').value);
+        formData.append('q2', document.getElementById('q2').value);
+        formData.append('q3', q3Values);
+        formData.append('q4', q4Value);
+        formData.append('q5', q5Values);
+        formData.append('naam', document.getElementById('naam').value);
+        formData.append('telefoon', document.getElementById('tel').value);
+        formData.append('email', document.getElementById('email').value);
+
+        fetch(scriptURL, { method: 'POST', body: formData })
+            .then(response => {
+                status.innerText = "Succes! Gegevens staan in de Sheet.";
+                status.className = "success";
+                form.reset();
+                btn.disabled = false;
+                document.querySelector('output').innerText = "5";
+                setTimeout(() => { status.style.display = "none"; }, 5000);
+            })
+            .catch(error => {
+                status.innerText = "Fout bij verzenden. Probeer opnieuw.";
+                status.className = "error";
+                btn.disabled = false;
+            });
+    });
+</script>
 
 </body>
 </html>
