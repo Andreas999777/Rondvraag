@@ -171,8 +171,14 @@
 
         <div class="card glass-card">
             <span class="card-title">✨ Wil je graag...</span>
-            <label class="option-item"><input type="checkbox" id="fitcheck_cb"> Wil een gratis welzijnsevaluatie?</label>
-            <label class="option-item"><input type="checkbox" id="infosessie_cb"> Een uitnodiging voor een infosessie?</label>
+            <label class="option-item">
+                <input type="checkbox" id="fitcheck_cb"> 
+                <span>Wil een gratis welzijnsevaluatie?</span>
+            </label>
+            <label class="option-item">
+                <input type="checkbox" id="infosessie_cb"> 
+                <span>Een uitnodiging voor een infosessie?</span>
+            </label>
         </div>
 
         <div class="card">
@@ -188,7 +194,8 @@
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxq1FpaWylAjTkfqcsusNWYrHKs6HuCvXLGgFz2SKmDgsL0cfbtSRegB_e8XsOBWOKFuw/exec';
+    // DE NIEUWE LINK IS HIER VERWERKT:
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz-CB4LDRdtV0kW5H3p31vSVIFAEcARNRvWzrwwe1toX94AB_laGFtxE8MjvOWNyoqb/exec';
     const form = document.getElementById('wellnessForm');
 
     form.addEventListener('submit', e => {
@@ -200,15 +207,17 @@
         status.innerText = "Bezig met opslaan... ⏳";
         status.style.background = "#fff";
 
+        // Vraag 3 verzamelen
         const q3 = Array.from(document.querySelectorAll('input[name="q3"]:checked')).map(c => c.value);
         const ontbijt = document.querySelector('input[name="ontbijt"]:checked');
         if(ontbijt) q3.push("Ontbijt: " + ontbijt.value);
 
+        // Vraag 5 verzamelen
         const q5 = Array.from(document.querySelectorAll('input[name="q5"]:checked')).map(c => c.value);
         const anders = document.getElementById('andersText').value;
         if(anders) q5.push("Anders: " + anders);
 
-const formData = new FormData();
+        const formData = new FormData();
         formData.append('coach', document.getElementById('coach').value);
         formData.append('naam', document.getElementById('naam').value);
         formData.append('telefoon', document.getElementById('tel').value);
@@ -219,7 +228,7 @@ const formData = new FormData();
         formData.append('q4', document.querySelector('input[name="q4"]:checked').value);
         formData.append('q5', q5.join(' | '));
         
-        // Gebruik exact deze namen, ze moeten matchen met het Google Script:
+        // DEZE NAMEN MATCHEN NU MET HET SCRIPT IN DE NIEUWE SHEET:
         formData.append('fitcheck', document.getElementById('fitcheck_cb').checked ? "JA" : "Nee");
         formData.append('infosessie', document.getElementById('infosessie_cb').checked ? "JA" : "Nee");
 
@@ -236,7 +245,7 @@ const formData = new FormData();
                 }, 2000);
             })
             .catch(error => {
-                status.innerText = "❌ Fout. Probeer opnieuw.";
+                status.innerText = "❌ Fout bij opslaan. Probeer opnieuw.";
                 status.style.background = "#f8d7da";
                 btn.disabled = false;
             });
