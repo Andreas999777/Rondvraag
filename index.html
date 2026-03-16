@@ -3,175 +3,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Welzijnsevaluatie - Andreas & Thalyssa</title>
+    <title>Welzijnsevaluatie Tool</title>
     <style>
         :root {
-            --primary-color: #2e7d32;
-            --primary-light: #e8f5e9;
-            --accent-color: #00c853;
-            --text-main: #212121;
-            --bg-body: #f5f5f5;
-            --bg-card: #ffffff;
-            --border-color: #e0e0e0;
+            --primary: #2d5a27;
+            --accent: #4caf50;
+            --bg: #f8f9fa;
+            --card: #ffffff;
+            --text: #333333;
+            --border: #e0e0e0;
         }
 
-        body { font-family: -apple-system, sans-serif; background-color: var(--bg-body); margin: 0; padding: 15px; display: flex; justify-content: center; }
-        .app-container { width: 100%; max-width: 500px; }
-        
-        .coach-selector { background: var(--bg-card); padding: 15px; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid var(--border-color); }
-        .coach-selector label { display: block; font-weight: 600; color: var(--primary-color); margin-bottom: 8px; font-size: 14px; text-transform: uppercase; }
-        .coach-selector select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border-color); font-size: 16px; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px 15px;
+            display: flex;
+            justify-content: center;
+        }
 
-        .question-card { background: var(--bg-card); padding: 20px; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 15px; }
-        .question-label { display: block; font-size: 17px; font-weight: 700; color: var(--text-main); margin-bottom: 15px; }
-        .section-divider { border-top: 2px solid var(--primary-color); margin: 30px 0 20px 0; padding-top: 10px; color: var(--primary-color); font-weight: 800; text-align: center; }
+        .container {
+            width: 100%;
+            max-width: 480px;
+        }
 
-        .choice-group { display: flex; flex-direction: column; gap: 10px; }
-        .choice-option { display: flex; align-items: center; padding: 15px; background: #fff; border: 2px solid var(--border-color); border-radius: 12px; cursor: pointer; transition: all 0.2s; }
-        .choice-option input { margin-right: 12px; transform: scale(1.3); }
-        .choice-option:has(input:checked) { background-color: var(--primary-light); border-color: var(--primary-color); }
+        /* Coach Selector */
+        .header-card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border-left: 6px solid var(--primary);
+        }
 
-        .modern-slider { width: 100%; height: 8px; border-radius: 4px; background: var(--border-color); outline: none; margin: 15px 0; accent-color: var(--accent-color); }
-        .slider-value { font-size: 32px; font-weight: 800; color: var(--primary-color); text-align: center; }
+        h1 {
+            font-size: 20px;
+            margin: 0 0 15px 0;
+            color: var(--primary);
+            text-align: center;
+            letter-spacing: 1px;
+        }
 
-        .modern-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); font-size: 16px; box-sizing: border-box; margin-top: 10px; }
-        
-        .submit-btn { background: var(--primary-color); color: white; border: none; padding: 18px; width: 100%; font-size: 18px; font-weight: 700; border-radius: 15px; cursor: pointer; margin-top: 20px; }
-        #status-message { margin-top: 15px; padding: 15px; border-radius: 12px; text-align: center; display: none; }
+        select, input[type="text"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-size: 16px;
+            box-sizing: border-box;
+            background: #fff;
+        }
+
+        /* Question Cards */
+        .card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .question-label {
+            display: block;
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        /* Custom Options */
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .option:active { transform: scale(0.98); }
+
+        .option input {
+            margin-right: 15px;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+
+        .option-text { font-size: 15px; }
+
+        .selected-option {
+            border-color: var(--primary);
+            background-color: #f1f8f1;
+        }
+
+        /* Slider */
+        .slider-container { text-align: center; }
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            accent-color: var(--primary);
+            margin: 15px 0;
+        }
+        .slider-val { font-size: 28px; font-weight: 800; color: var(--primary); }
+
+        /* Sub-question logic */
+        .sub-question {
+            margin-top: 10px;
+            padding: 15px;
+            background: #fdfdfd;
+            border-radius: 10px;
+            border-left: 3px solid var(--accent);
+            display: none;
+        }
+
+        /* Buttons */
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 18px;
+            width: 100%;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(45, 90, 39, 0.3);
+        }
+
+        .btn:disabled { background: #999; }
+
+        #status {
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <div class="coach-selector">
-        <label>Welzijnscoach</label>
+<div class="container">
+    <div class="header-card">
+        <h1>STRESS & WELZIJN</h1>
+        <label style="font-size: 12px; color: #666; font-weight: bold; text-transform: uppercase;">Coach</label>
         <select id="coach">
             <option value="Andreas">Andreas</option>
             <option value="Thalyssa">Thalyssa</option>
         </select>
     </div>
 
-    <form id="surveyForm">
-        <div class="question-card">
-            <label class="question-label">1. Hoe voel jij je meestal?</label>
-            <div class="choice-group">
-                <label class="choice-option"><input type="radio" name="q1" value="Kalm" required> Kalm</label>
-                <label class="choice-option"><input type="radio" name="q1" value="Actief"> Actief</label>
-                <label class="choice-option"><input type="radio" name="q1" value="Gestresseerd"> Gestresseerd</label>
+    <form id="evalForm">
+        <div class="card">
+            <span class="question-label">1. Hoe voel jij je meestal?</span>
+            <label class="option"><input type="radio" name="q1" value="Kalm" required> <span class="option-text">Kalm</span></label>
+            <label class="option"><input type="radio" name="q1" value="Actief"> <span class="option-text">Actief</span></label>
+            <label class="option"><input type="radio" name="q1" value="Gestresseerd"> <span class="option-text">Gestresseerd</span></label>
+        </div>
+
+        <div class="card">
+            <span class="question-label">2. Hoe gaat het met je gezondheid & energie?</span>
+            <div class="slider-container">
+                <input type="range" id="q2" min="1" max="10" value="5" class="slider" oninput="this.nextElementSibling.innerText = this.value">
+                <div class="slider-val">5</div>
+                <div style="display:flex; justify-content:space-between; font-size:12px; color:#888;">
+                    <span>Helemaal niet ok</span>
+                    <span>Supergoed</span>
+                </div>
             </div>
         </div>
 
-        <div class="question-card">
-            <label class="question-label">2. Gezondheid & Energie (1-10)</label>
-            <input type="range" id="q2" min="1" max="10" value="5" class="modern-slider" oninput="this.nextElementSibling.innerText = this.value">
-            <div class="slider-value">5</div>
-        </div>
-
-        <div class="question-card">
-            <label class="question-label">3. Eetgewoontes</label>
-            <div class="choice-group">
-                <label class="choice-option"><input type="checkbox" name="q3" value="Meestal gezond"> Meestal gezond</label>
-                <label class="choice-option"><input type="checkbox" name="q3" value="Slaat maaltijden over"> Sla maaltijden over</label>
-                <label class="choice-option"><input type="checkbox" name="q3" value="Onregelmatig"> Onregelmatig</label>
-                <label class="choice-option"><input type="checkbox" name="q3" value="Snoep/Energydrinks"> Snoep/Energydrinks</label>
-                <label class="choice-option"><input type="checkbox" name="q3" value="Ongezond"> Meestal ongezond</label>
+        <div class="card">
+            <span class="question-label">3. Hoe zou je jouw eetgewoontes omschrijven?</span>
+            <label class="option"><input type="checkbox" name="q3" value="Ik eet meestal gezond"> <span class="option-text">Ik eet meestal gezond</span></label>
+            <label class="option">
+                <input type="checkbox" name="q3" value="Ik sla vaak maaltijden over" id="skipMeals"> 
+                <span class="option-text">Ik sla vaak maaltijden over</span>
+            </label>
+            
+            <div id="breakfastBox" class="sub-question">
+                <span style="font-weight:bold; font-size:14px;">Ontbijt je iedere dag?</span><br><br>
+                <label style="margin-right:20px;"><input type="radio" name="ontbijt" value="Ja"> Ja</label>
+                <label><input type="radio" name="ontbijt" value="Nee"> Nee</label>
             </div>
+
+            <label class="option"><input type="checkbox" name="q3" value="Ik eet onregelmatig"> <span class="option-text">Ik eet onregelmatig</span></label>
+            <label class="option"><input type="checkbox" name="q3" value="Ik ben fan van snoep/energydrinks"> <span class="option-text">Ik ben fan van snoep/energydrinks</span></label>
+            <label class="option"><input type="checkbox" name="q3" value="Ik eet meestal ongezond"> <span class="option-text">Ik eet meestal ongezond</span></label>
         </div>
 
-        <div class="question-card">
-            <label class="question-label">4. Hoeveel beweeg je per dag?</label>
-            <div class="choice-group">
-                <label class="choice-option"><input type="radio" name="q4" value="Minder dan 30 min" required> Minder dan 30 min</label>
-                <label class="choice-option"><input type="radio" name="q4" value="Meer dan 30 min"> Meer dan 30 min</label>
-                <label class="choice-option"><input type="radio" name="q4" value="Sportief"> Sportief</label>
-            </div>
+        <div class="card">
+            <span class="question-label">4. Hoeveel beweeg je per dag?</span>
+            <label class="option"><input type="radio" name="q4" value="Minder dan 30 min" required> <span class="option-text">Minder dan 30 min</span></label>
+            <label class="option"><input type="radio" name="q4" value="Meer dan 30 min"> <span class="option-text">Meer dan 30 min</span></label>
+            <label class="option"><input type="radio" name="q4" value="Sportief"> <span class="option-text">Sportief</span></label>
         </div>
 
-        <div class="question-card">
-            <label class="question-label">5. Wat is voor jou het belangrijkste?</label>
-            <div class="choice-group">
-                <label class="choice-option"><input type="checkbox" name="q5" value="Energie"> Energie & Focus</label>
-                <label class="choice-option"><input type="checkbox" name="q5" value="Afslanken"> Afslanken</label>
-                <label class="choice-option"><input type="checkbox" name="q5" value="Conditie"> Conditie & Sport</label>
-                <label class="choice-option"><input type="checkbox" name="q5" value="Huid/Haar"> Huid/Haar/Gewrichten</label>
-                <label class="choice-option"><input type="checkbox" name="q5" value="Weerstand"> Weerstand & Slaap</label>
-            </div>
+        <div class="card">
+            <span class="question-label">5. Wat is voor jou het belangrijkste?</span>
+            <label class="option"><input type="checkbox" name="q5" value="Energie & Focus"> <span class="option-text">Meer energie & focus</span></label>
+            <label class="option"><input type="checkbox" name="q5" value="Afslanken/Spiermassa"> <span class="option-text">Afslanken zonder honger (of spiermassa opbouwen)</span></label>
+            <label class="option"><input type="checkbox" name="q5" value="Conditie & Sport"> <span class="option-text">Betere conditie & sportprestaties</span></label>
+            <label class="option"><input type="checkbox" name="q5" value="Huid/Haar/Gewrichten"> <span class="option-text">Mooie huid/haar & soepele gewrichten</span></label>
+            <label class="option"><input type="checkbox" name="q5" value="Weerstand/Vertering/Slaap"> <span class="option-text">Sterke weerstand, goede spijsvertering & slaap</span></label>
+            <label class="option"><input type="checkbox" name="q5" value="Anders" id="andersCheck"> <span class="option-text">Anders</span></label>
+            <input type="text" id="andersInput" placeholder="Vertel hier meer..." class="modern-input" style="display:none; margin-top:10px; padding:10px;">
         </div>
 
-        <div class="section-divider">WIL JE GRAAG...</div>
-        
-        <div class="question-card" style="border: 2px solid var(--accent-color);">
-            <div class="choice-group">
-                <label class="choice-option">
-                    <input type="checkbox" id="fitcheck" value="JA">
-                    <span style="font-weight: bold;">Een gratis fitcheck (welzijnsevaluatie)?</span>
-                </label>
-                <label class="choice-option">
-                    <input type="checkbox" id="infosessie" value="JA">
-                    <span style="font-weight: bold;">Een uitnodiging voor een infosessie over voeding & levensstijl?</span>
-                </label>
-            </div>
+        <div class="card" style="background-color: #f1f8f1; border: 1px solid var(--accent);">
+            <span class="question-label" style="color: var(--primary);">Wil je graag...</span>
+            <label class="option"><input type="checkbox" name="extra" value="Fitcheck"> <span class="option-text">Een gratis fitcheck (welzijnsevaluatie)?</span></label>
+            <label class="option"><input type="checkbox" name="extra" value="Infosessie"> <span class="option-text">Een uitnodiging voor een infosessie over voeding & levensstijl?</span></label>
         </div>
 
-        <div class="question-card">
-            <label class="question-label">Contactgegevens</label>
-            <input type="text" id="naam" required class="modern-input" placeholder="Voornaam en naam">
-            <input type="tel" id="tel" class="modern-input" placeholder="Telefoonnummer">
-            <input type="email" id="email" class="modern-input" placeholder="E-mailadres">
+        <div class="card">
+            <span class="question-label">Contactgegevens</span>
+            <input type="text" id="naam" placeholder="Voornaam en naam" required style="margin-bottom:10px;">
+            <input type="tel" id="tel" placeholder="Telefoonnummer" style="margin-bottom:10px;">
+            <input type="email" id="email" placeholder="E-mailadres">
         </div>
 
-        <div id="status-message"></div>
-        <button type="submit" class="submit-btn" id="submitBtn">Opslaan & Volgende</button>
+        <button type="submit" id="submitBtn" class="btn">Gegevens Opslaan</button>
+        <div id="status"></div>
     </form>
 </div>
 
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzTvEBSWlUqnDXe8WU5j2-hQsnBUFns9zFEEkvSWlzS5bOOosT4wN3Vaot9fvMNtFziiA/exec';
-    const form = document.getElementById('surveyForm');
+    
+    // UI Logica: Subvragen tonen/verbergen
+    document.getElementById('skipMeals').addEventListener('change', function() {
+        document.getElementById('breakfastBox').style.display = this.checked ? 'block' : 'none';
+    });
+
+    document.getElementById('andersCheck').addEventListener('change', function() {
+        document.getElementById('andersInput').style.display = this.checked ? 'block' : 'none';
+    });
+
+    // Formulier versturen
+    const form = document.getElementById('evalForm');
     const btn = document.getElementById('submitBtn');
-    const status = document.getElementById('status-message');
+    const status = document.getElementById('status');
 
     form.addEventListener('submit', e => {
         e.preventDefault();
         btn.disabled = true;
-        status.style.display = "block";
-        status.innerText = "Bezig met verzenden...";
-        status.style.backgroundColor = "#e0e0e0";
+        status.style.display = 'block';
+        status.innerText = "Bezig met opslaan...";
+        status.style.background = "#eee";
+
+        // Antwoorden verzamelen
+        const q3Values = Array.from(document.querySelectorAll('input[name="q3"]:checked')).map(c => c.value);
+        if(document.getElementById('skipMeals').checked) {
+            const ontbijt = document.querySelector('input[name="ontbijt"]:checked');
+            if(ontbijt) q3Values.push("Ontbijt elke dag: " + ontbijt.value);
+        }
+
+        const q5Values = Array.from(document.querySelectorAll('input[name="q5"]:checked')).map(c => c.value);
+        if(document.getElementById('andersCheck').checked) {
+            q5Values.push("Extra info: " + document.getElementById('andersInput').value);
+        }
+
+        const extraValues = Array.from(document.querySelectorAll('input[name="extra"]:checked')).map(c => c.value);
 
         const formData = new FormData();
         formData.append('coach', document.getElementById('coach').value);
-        formData.append('q1', document.querySelector('input[name="q1"]:checked').value);
-        formData.append('q2', document.getElementById('q2').value);
-        formData.append('q3', Array.from(document.querySelectorAll('input[name="q3"]:checked')).map(cb => cb.value).join(', '));
-        formData.append('q4', document.querySelector('input[name="q4"]:checked').value);
-        formData.append('q5', Array.from(document.querySelectorAll('input[name="q5"]:checked')).map(cb => cb.value).join(', '));
-        
-        // De nieuwe velden
-        formData.append('fitcheck', document.getElementById('fitcheck').checked ? "JA" : "Nee");
-        formData.append('infosessie', document.getElementById('infosessie').checked ? "JA" : "Nee");
-        
         formData.append('naam', document.getElementById('naam').value);
         formData.append('telefoon', document.getElementById('tel').value);
         formData.append('email', document.getElementById('email').value);
+        formData.append('q1', document.querySelector('input[name="q1"]:checked').value);
+        formData.append('q2', document.getElementById('q2').value);
+        formData.append('q3', q3Values.join(' | '));
+        formData.append('q4', document.querySelector('input[name="q4"]:checked').value);
+        formData.append('q5', q5Values.join(' | '));
+        formData.append('fitcheck', extraValues.includes("Fitcheck") ? "JA" : "Nee");
+        formData.append('infosessie', extraValues.includes("Infosessie") ? "JA" : "Nee");
 
         fetch(scriptURL, { method: 'POST', body: formData })
             .then(response => {
                 status.innerText = "Succesvol opgeslagen!";
-                status.style.backgroundColor = "#d4edda";
+                status.style.background = "#d4edda";
+                status.style.color = "#155724";
                 form.reset();
-                document.querySelector('.slider-value').innerText = "5";
+                document.querySelector('.slider-val').innerText = "5";
+                document.getElementById('breakfastBox').style.display = 'none';
+                document.getElementById('andersInput').style.display = 'none';
                 setTimeout(() => { 
-                    status.style.display = "none"; 
+                    status.style.display = 'none'; 
                     btn.disabled = false;
-                    window.scrollTo(0,0);
+                    window.scrollTo({top: 0, behavior: 'smooth'});
                 }, 3000);
             })
             .catch(error => {
-                status.innerText = "Fout bij verzenden!";
-                status.style.backgroundColor = "#f8d7da";
+                status.innerText = "Fout bij verzenden. Probeer opnieuw.";
+                status.style.background = "#f8d7da";
                 btn.disabled = false;
             });
     });
 </script>
+
 </body>
 </html>
