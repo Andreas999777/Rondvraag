@@ -7,7 +7,7 @@
     <style>
         :root {
             --primary-green: #2e7d32;
-            --soft-green: rgba(46, 125, 50, 0.08); /* De transparante groene schijn */
+            --soft-green: rgba(46, 125, 50, 0.08); 
             --border-green: rgba(46, 125, 50, 0.15);
             --white: #ffffff;
             --text-dark: #1b3022;
@@ -48,7 +48,6 @@
             border: 1px solid var(--border-green);
         }
 
-        /* De transparante groene vakken */
         .glass-card {
             background: var(--soft-green) !important;
             border: 1px solid var(--border-green);
@@ -79,23 +78,20 @@
             margin-top: 5px;
         }
 
-        /* Slider */
         .slider-wrap { text-align: center; }
         .slider-val { font-size: 32px; font-weight: 800; color: var(--primary-green); }
         .range-input { width: 100%; height: 8px; accent-color: var(--primary-green); margin: 10px 0; }
 
-        /* Ontbijt & Anders (Altijd zichtbaar) */
         .static-sub {
-            padding: 12px;
-            background: rgba(255,255,255,0.4);
-            border-radius: 10px;
-            margin: 10px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 12px;
+            margin: 5px 0 15px 0;
             border: 1px dashed var(--border-green);
         }
 
-        /* Opslaan knop met transparante groene schijn */
         .btn-submit {
-            background: rgba(46, 125, 50, 0.15);
+            background: rgba(46, 125, 50, 0.12);
             color: var(--primary-green);
             border: 1px solid var(--primary-green);
             padding: 18px;
@@ -140,17 +136,17 @@
         <div class="card">
             <span class="card-title">3. Jouw eetgewoontes</span>
             <label class="option-item"><input type="checkbox" name="q3" value="Meestal gezond"> Ik eet meestal gezond</label>
+            <label class="option-item"><input type="checkbox" name="q3" value="Meestal ongezond"> Ik eet meestal ongezond</label>
+            <label class="option-item"><input type="checkbox" name="q3" value="Onregelmatig"> Ik eet onregelmatig</label>
             <label class="option-item"><input type="checkbox" name="q3" value="Slaat maaltijden over"> Ik sla vaak maaltijden over</label>
             
             <div class="static-sub">
-                <span style="font-size: 14px; font-weight: bold;">Ontbijt je iedere dag?</span><br>
-                <label style="margin-right:15px;"><input type="radio" name="ontbijt" value="Ja"> Ja</label>
+                <span style="font-size: 14px; font-weight: bold; color: var(--primary-green);">Ontbijt je iedere dag?</span><br><br>
+                <label style="margin-right:20px;"><input type="radio" name="ontbijt" value="Ja"> Ja</label>
                 <label><input type="radio" name="ontbijt" value="Nee"> Nee</label>
             </div>
 
-            <label class="option-item"><input type="checkbox" name="q3" value="Onregelmatig"> Ik eet onregelmatig</label>
             <label class="option-item"><input type="checkbox" name="q3" value="Snoep/Energy"> Ik ben fan van snoep/energydrinks</label>
-            <label class="option-item"><input type="checkbox" name="q3" value="Ongezond"> Ik eet meestal ongezond</label>
         </div>
 
         <div class="card">
@@ -163,12 +159,12 @@
         <div class="card">
             <span class="card-title">5. Wat is voor jou het belangrijkste?</span>
             <label class="option-item"><input type="checkbox" name="q5" value="Energie"> Meer energie & focus</label>
-            <label class="option-item"><input type="checkbox" name="q5" value="Afslanken/Spieren"> Afslanken zonder honger (of spiermassa opbouwen)</label>
+            <label class="option-item"><input type="checkbox" name="q5" value="Afslanken"> Afslanken zonder honger of spiermassa opbouwen</label>
             <label class="option-item"><input type="checkbox" name="q5" value="Conditie"> Betere conditie & sportprestaties</label>
             <label class="option-item"><input type="checkbox" name="q5" value="Huid/Haar"> Mooie huid/haar & soepele gewrichten</label>
             <label class="option-item"><input type="checkbox" name="q5" value="Weerstand"> Sterke weerstand, goede spijsvertering & slaap</label>
             <div class="static-sub">
-                <span style="font-size: 14px; font-weight: bold;">Anders:</span>
+                <span style="font-size: 14px; font-weight: bold; color: var(--primary-green);">Anders:</span>
                 <input type="text" id="andersText" class="text-input" placeholder="Typ hier de details...">
             </div>
         </div>
@@ -229,7 +225,7 @@
 
         fetch(scriptURL, { method: 'POST', body: formData })
             .then(response => {
-                status.innerText = "✅ Opgeslagen!";
+                status.innerText = "✅ Succesvol Opgeslagen!";
                 status.style.background = "#d4edda";
                 form.reset();
                 document.querySelector('.slider-val').innerText = "5";
