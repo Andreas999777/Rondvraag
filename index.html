@@ -24,7 +24,6 @@
         }
 
         .app-wrapper { width: 100%; max-width: 480px; }
-
         .header { text-align: center; padding: 15px 0; }
         .header h1 { margin: 0; font-size: 22px; color: var(--primary-green); letter-spacing: 1px; }
 
@@ -37,7 +36,7 @@
             border: 1px solid var(--border-green);
         }
 
-        .coach-pill select { border: none; font-weight: bold; color: var(--primary-green); outline: none; background: transparent; }
+        .coach-pill select { border: none; font-weight: bold; color: var(--primary-green); outline: none; background: transparent; font-size: 16px; }
 
         .card {
             background: var(--white);
@@ -105,7 +104,6 @@
         }
 
         .btn-submit:active { background: var(--primary-green); color: white; }
-
         #status-msg { text-align: center; padding: 12px; border-radius: 10px; display: none; margin-bottom: 15px; font-weight: bold; }
     </style>
 </head>
@@ -114,7 +112,9 @@
 <div class="app-wrapper">
     <div class="header">
         <h1>🌿 Welzijnscheck</h1>
-        <div class="coach-pill">Coach: <select id="coach"><option>Andreas</option><option>Thalyssa</option></select></div>
+        <div class="coach-pill">
+            Coach: <select id="coach"><option value="Andreas">Andreas</option><option value="Thalyssa">Thalyssa</option></select>
+        </div>
     </div>
 
     <form id="wellnessForm">
@@ -171,8 +171,8 @@
 
         <div class="card glass-card">
             <span class="card-title">✨ Wil je graag...</span>
-            <label class="option-item"><input type="checkbox" name="extra" value="Fitcheck"> Een gratis fitcheck?</label>
-            <label class="option-item"><input type="checkbox" name="extra" value="Infosessie"> Een uitnodiging voor een infosessie?</label>
+            <label class="option-item"><input type="checkbox" id="fitcheck_cb"> Wil een gratis welzijnsevaluatie?</label>
+            <label class="option-item"><input type="checkbox" id="infosessie_cb"> Een uitnodiging voor een infosessie?</label>
         </div>
 
         <div class="card">
@@ -208,8 +208,6 @@
         const anders = document.getElementById('andersText').value;
         if(anders) q5.push("Anders: " + anders);
 
-        const extras = Array.from(document.querySelectorAll('input[name="extra"]:checked')).map(c => c.value);
-
         const formData = new FormData();
         formData.append('coach', document.getElementById('coach').value);
         formData.append('naam', document.getElementById('naam').value);
@@ -220,8 +218,10 @@
         formData.append('q3', q3.join(' | '));
         formData.append('q4', document.querySelector('input[name="q4"]:checked').value);
         formData.append('q5', q5.join(' | '));
-        formData.append('fitcheck', extras.includes("Fitcheck") ? "JA" : "Nee");
-        formData.append('infosessie', extras.includes("Infosessie") ? "JA" : "Nee");
+        
+        // Match met de fitcheck en infosessie
+        formData.append('fitcheck', document.getElementById('fitcheck_cb').checked ? "JA" : "Nee");
+        formData.append('infosessie', document.getElementById('infosessie_cb').checked ? "JA" : "Nee");
 
         fetch(scriptURL, { method: 'POST', body: formData })
             .then(response => {
