@@ -7,15 +7,15 @@
     <style>
         :root {
             --primary-green: #2e7d32;
-            --accent-green: #00c853;
-            --light-mint: #f0f7f1;
+            --soft-green: rgba(46, 125, 50, 0.08); /* De transparante groene schijn */
+            --border-green: rgba(46, 125, 50, 0.15);
             --white: #ffffff;
             --text-dark: #1b3022;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--light-mint);
+            background-color: #f4f8f5;
             color: var(--text-dark);
             margin: 0;
             padding: 15px;
@@ -25,149 +25,92 @@
 
         .app-wrapper { width: 100%; max-width: 480px; }
 
-        /* Header Styling */
-        .header {
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 24px;
-            color: var(--primary-green);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .header { text-align: center; padding: 15px 0; }
+        .header h1 { margin: 0; font-size: 22px; color: var(--primary-green); letter-spacing: 1px; }
 
         .coach-pill {
             background: var(--white);
-            padding: 10px 15px;
+            padding: 8px 15px;
             border-radius: 50px;
             display: inline-block;
             margin-top: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border: 1px solid #d1e4d4;
+            border: 1px solid var(--border-green);
         }
 
-        .coach-pill select {
-            border: none;
-            font-weight: bold;
-            color: var(--primary-green);
-            font-size: 14px;
-            outline: none;
-            background: transparent;
-        }
+        .coach-pill select { border: none; font-weight: bold; color: var(--primary-green); outline: none; background: transparent; }
 
-        /* Card Styling */
         .card {
             background: var(--white);
-            border-radius: 20px;
+            border-radius: 18px;
             padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.08);
-            border: 1px solid #e8f0e9;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-green);
         }
 
-        .card-title {
-            display: block;
-            font-weight: 800;
-            font-size: 17px;
-            margin-bottom: 15px;
-            color: var(--primary-green);
+        /* De transparante groene vakken */
+        .glass-card {
+            background: var(--soft-green) !important;
+            border: 1px solid var(--border-green);
         }
 
-        /* Options & Inputs */
+        .card-title { display: block; font-weight: 800; font-size: 16px; margin-bottom: 12px; color: var(--primary-green); }
+
         .option-item {
             display: flex;
             align-items: center;
-            padding: 14px;
-            background: #f9fbf9;
-            border: 2px solid #edf2ee;
-            border-radius: 12px;
+            padding: 12px;
+            background: rgba(255,255,255,0.6);
+            border: 1px solid var(--border-green);
+            border-radius: 10px;
             margin-bottom: 8px;
             cursor: pointer;
-            transition: 0.2s;
         }
 
-        .option-item:active { transform: scale(0.98); }
-
-        .option-item input {
-            width: 20px;
-            height: 20px;
-            margin-right: 12px;
-            accent-color: var(--accent-green);
-        }
-
-        .option-item.active {
-            border-color: var(--accent-green);
-            background-color: #f0fff4;
-        }
+        .option-item input { width: 18px; height: 18px; margin-right: 12px; accent-color: var(--primary-green); }
 
         .text-input {
             width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid #d1e4d4;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border-green);
             font-size: 16px;
             box-sizing: border-box;
-            background: #fff;
-            margin-top: 8px;
+            margin-top: 5px;
         }
 
         /* Slider */
-        .slider-wrap { text-align: center; padding: 10px 0; }
-        .slider-val { font-size: 36px; font-weight: 800; color: var(--accent-green); }
-        .range-input {
-            width: 100%;
-            height: 10px;
-            border-radius: 5px;
-            background: #e0eee2;
-            outline: none;
-            accent-color: var(--primary-green);
-            margin: 15px 0;
+        .slider-wrap { text-align: center; }
+        .slider-val { font-size: 32px; font-weight: 800; color: var(--primary-green); }
+        .range-input { width: 100%; height: 8px; accent-color: var(--primary-green); margin: 10px 0; }
+
+        /* Ontbijt & Anders (Altijd zichtbaar) */
+        .static-sub {
+            padding: 12px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 10px;
+            margin: 10px 0;
+            border: 1px dashed var(--border-green);
         }
 
-        /* Special Sections */
-        .breakfast-toggle {
-            background: #fff9e6;
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 10px;
-            border: 1px solid #ffeeba;
-            display: none;
-        }
-
-        .will-box {
-            background: var(--primary-green);
-            color: white !important;
-        }
-        .will-box .card-title { color: white; }
-        .will-box .option-item { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
-        .will-box .option-item input { accent-color: #fff; }
-
-        /* Submit Button */
+        /* Opslaan knop met transparante groene schijn */
         .btn-submit {
-            background: var(--accent-green);
-            color: white;
-            border: none;
-            padding: 20px;
+            background: rgba(46, 125, 50, 0.15);
+            color: var(--primary-green);
+            border: 1px solid var(--primary-green);
+            padding: 18px;
             width: 100%;
             font-size: 18px;
             font-weight: 800;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
             cursor: pointer;
-            margin: 20px 0;
+            transition: 0.3s;
+            margin-bottom: 30px;
         }
 
-        #status-msg {
-            text-align: center;
-            padding: 15px;
-            border-radius: 12px;
-            display: none;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+        .btn-submit:active { background: var(--primary-green); color: white; }
+
+        #status-msg { text-align: center; padding: 12px; border-radius: 10px; display: none; margin-bottom: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -175,13 +118,7 @@
 <div class="app-wrapper">
     <div class="header">
         <h1>🌿 Welzijnscheck</h1>
-        <div class="coach-pill">
-            Coach: 
-            <select id="coach">
-                <option value="Andreas">Andreas</option>
-                <option value="Thalyssa">Thalyssa</option>
-            </select>
-        </div>
+        <div class="coach-pill">Coach: <select id="coach"><option>Andreas</option><option>Thalyssa</option></select></div>
     </div>
 
     <form id="wellnessForm">
@@ -197,20 +134,16 @@
             <div class="slider-wrap">
                 <div class="slider-val">5</div>
                 <input type="range" id="q2" min="1" max="10" value="5" class="range-input" oninput="this.previousElementSibling.innerText = this.value">
-                <div style="display:flex; justify-content:space-between; font-size:11px; opacity:0.6;">
-                    <span>Helemaal niet ok</span>
-                    <span>Supergoed</span>
-                </div>
             </div>
         </div>
 
         <div class="card">
             <span class="card-title">3. Jouw eetgewoontes</span>
             <label class="option-item"><input type="checkbox" name="q3" value="Meestal gezond"> Ik eet meestal gezond</label>
-            <label class="option-item"><input type="checkbox" name="q3" value="Slaat maaltijden over" id="triggerBreakfast"> Ik sla vaak maaltijden over</label>
+            <label class="option-item"><input type="checkbox" name="q3" value="Slaat maaltijden over"> Ik sla vaak maaltijden over</label>
             
-            <div id="breakfastSection" class="breakfast-toggle">
-                <p style="margin-top:0; font-weight:bold; font-size:14px;">Ontbijt je iedere dag?</p>
+            <div class="static-sub">
+                <span style="font-size: 14px; font-weight: bold;">Ontbijt je iedere dag?</span><br>
                 <label style="margin-right:15px;"><input type="radio" name="ontbijt" value="Ja"> Ja</label>
                 <label><input type="radio" name="ontbijt" value="Nee"> Nee</label>
             </div>
@@ -229,16 +162,18 @@
 
         <div class="card">
             <span class="card-title">5. Wat is voor jou het belangrijkste?</span>
-            <label class="option-item"><input type="checkbox" name="q5" value="Energie & Focus"> Meer energie & focus</label>
-            <label class="option-item"><input type="checkbox" name="q5" value="Afslanken/Spiermassa"> Afslanken zonder honger (of spiermassa opbouwen)</label>
-            <label class="option-item"><input type="checkbox" name="q5" value="Conditie & Sport"> Betere conditie & sportprestaties</label>
-            <label class="option-item"><input type="checkbox" name="q5" value="Huid/Haar/Gewrichten"> Mooie huid/haar & soepele gewrichten</label>
-            <label class="option-item"><input type="checkbox" name="q5" value="Weerstand/Slaap"> Sterke weerstand, goede spijsvertering & slaap</label>
-            <label class="option-item"><input type="checkbox" name="q5" value="Anders" id="triggerAnders"> Anders:</label>
-            <input type="text" id="andersText" class="text-input" placeholder="Typ hier de details..." style="display:none;">
+            <label class="option-item"><input type="checkbox" name="q5" value="Energie"> Meer energie & focus</label>
+            <label class="option-item"><input type="checkbox" name="q5" value="Afslanken/Spieren"> Afslanken zonder honger (of spiermassa opbouwen)</label>
+            <label class="option-item"><input type="checkbox" name="q5" value="Conditie"> Betere conditie & sportprestaties</label>
+            <label class="option-item"><input type="checkbox" name="q5" value="Huid/Haar"> Mooie huid/haar & soepele gewrichten</label>
+            <label class="option-item"><input type="checkbox" name="q5" value="Weerstand"> Sterke weerstand, goede spijsvertering & slaap</label>
+            <div class="static-sub">
+                <span style="font-size: 14px; font-weight: bold;">Anders:</span>
+                <input type="text" id="andersText" class="text-input" placeholder="Typ hier de details...">
+            </div>
         </div>
 
-        <div class="card will-box">
+        <div class="card glass-card">
             <span class="card-title">✨ Wil je graag...</span>
             <label class="option-item"><input type="checkbox" name="extra" value="Fitcheck"> Een gratis fitcheck?</label>
             <label class="option-item"><input type="checkbox" name="extra" value="Infosessie"> Een uitnodiging voor een infosessie?</label>
@@ -252,44 +187,30 @@
         </div>
 
         <div id="status-msg"></div>
-        <button type="submit" id="submitBtn" class="btn-submit">OPSLAAN & VOLGENDE</button>
+        <button type="submit" id="submitBtn" class="btn-submit">OPSLAAN</button>
     </form>
 </div>
 
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzTvEBSWlUqnDXe8WU5j2-hQsnBUFns9zFEEkvSWlzS5bOOosT4wN3Vaot9fvMNtFziiA/exec';
     const form = document.getElementById('wellnessForm');
-    
-    // Interactieve logica
-    document.getElementById('triggerBreakfast').addEventListener('change', function() {
-        document.getElementById('breakfastSection').style.display = this.checked ? 'block' : 'none';
-    });
 
-    document.getElementById('triggerAnders').addEventListener('change', function() {
-        document.getElementById('andersText').style.display = this.checked ? 'block' : 'none';
-    });
-
-    // Versturen
     form.addEventListener('submit', e => {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
         const status = document.getElementById('status-msg');
-        
         btn.disabled = true;
         status.style.display = 'block';
         status.innerText = "Bezig met opslaan... ⏳";
         status.style.background = "#fff";
 
         const q3 = Array.from(document.querySelectorAll('input[name="q3"]:checked')).map(c => c.value);
-        if(document.getElementById('triggerBreakfast').checked) {
-            const ontbijt = document.querySelector('input[name="ontbijt"]:checked');
-            if(ontbijt) q3.push("Ontbijt elke dag: " + ontbijt.value);
-        }
+        const ontbijt = document.querySelector('input[name="ontbijt"]:checked');
+        if(ontbijt) q3.push("Ontbijt: " + ontbijt.value);
 
         const q5 = Array.from(document.querySelectorAll('input[name="q5"]:checked')).map(c => c.value);
-        if(document.getElementById('triggerAnders').checked) {
-            q5.push("Anders: " + document.getElementById('andersText').value);
-        }
+        const anders = document.getElementById('andersText').value;
+        if(anders) q5.push("Anders: " + anders);
 
         const extras = Array.from(document.querySelectorAll('input[name="extra"]:checked')).map(c => c.value);
 
@@ -308,7 +229,7 @@
 
         fetch(scriptURL, { method: 'POST', body: formData })
             .then(response => {
-                status.innerText = "✅ Succesvol opgeslagen!";
+                status.innerText = "✅ Opgeslagen!";
                 status.style.background = "#d4edda";
                 form.reset();
                 document.querySelector('.slider-val').innerText = "5";
@@ -316,10 +237,10 @@
                     status.style.display = 'none'; 
                     btn.disabled = false;
                     window.scrollTo({top: 0, behavior: 'smooth'});
-                }, 3000);
+                }, 2000);
             })
             .catch(error => {
-                status.innerText = "❌ Fout. Check internet.";
+                status.innerText = "❌ Fout. Probeer opnieuw.";
                 status.style.background = "#f8d7da";
                 btn.disabled = false;
             });
