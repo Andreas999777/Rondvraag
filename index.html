@@ -208,7 +208,7 @@
         const anders = document.getElementById('andersText').value;
         if(anders) q5.push("Anders: " + anders);
 
-        const formData = new FormData();
+const formData = new FormData();
         formData.append('coach', document.getElementById('coach').value);
         formData.append('naam', document.getElementById('naam').value);
         formData.append('telefoon', document.getElementById('tel').value);
@@ -219,7 +219,7 @@
         formData.append('q4', document.querySelector('input[name="q4"]:checked').value);
         formData.append('q5', q5.join(' | '));
         
-        // Match met de fitcheck en infosessie
+        // Gebruik exact deze namen, ze moeten matchen met het Google Script:
         formData.append('fitcheck', document.getElementById('fitcheck_cb').checked ? "JA" : "Nee");
         formData.append('infosessie', document.getElementById('infosessie_cb').checked ? "JA" : "Nee");
 
